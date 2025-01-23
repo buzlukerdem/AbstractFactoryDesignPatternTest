@@ -306,7 +306,6 @@ class Storage : IStorage
 class PowerSupply : IPowerSupply
 {
     public PowerSupplyBrands PowerSupplyBrand { get; set; }
-    [Required(ErrorMessage = "Not Null")]
     public string PowerSupplyName { get; set; }
     public string PowerSupplyWatt { get; set; }
 }
