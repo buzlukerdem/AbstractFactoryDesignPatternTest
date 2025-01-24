@@ -18,8 +18,8 @@ class Database
 }
 enum DatabaseType
 {
-    MsSQL,
     MySQL,
+    MsSQL,
     PostgreSQL,
     Oracle
 }
@@ -47,6 +47,7 @@ class DatabaseCreator
             DatabaseType.PostgreSQL => new PostgreSQL(),
             DatabaseType.Oracle => new Oracle(),
         };
+        _databaseType = databaseType;
         _connection = databaseFactory.CreateConnection();
         _command = databaseFactory.CreateCommand();
         return new Database(_databaseType, _connection, _command);
@@ -159,7 +160,7 @@ interface IConnection
 }
 interface ICommand
 {
-    void Execute(string query);
+    string Execute(string query);
 }
 #endregion
 #region Products
@@ -190,7 +191,13 @@ class Connection : IConnection
 }
 class Command : ICommand
 {
-    public void Execute(string query) { }
+    public string ExecuteResult { get; set; }
+    public string Execute(string query)
+    {
+        ExecuteResult = query;
+        Console.WriteLine($"Query: {query}");
+        return ExecuteResult;
+    }
 }
 #endregion
 
